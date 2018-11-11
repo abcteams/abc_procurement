@@ -1,0 +1,8 @@
+1- to print the sql change ->get from ->toSql and print the statment
+$student = DB::table('student')->toSql();
+
+
+$student = DB::table('student')->get();
+$query = DB::getQueryLog();
+$lastQuery = end($query);
+print_r($lastQuery);

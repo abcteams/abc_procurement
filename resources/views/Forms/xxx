@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="{{ app()->getLocale() }}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>Procurement</title>
+
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" id="theme"  href="{{ asset('css/theme-default.css') }}"/>
+
+    <script type="text/javascript" src="{{ asset('js/plugins/jquery/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/plugins/bootstrap/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/select2.js') }}"></script>
+
+
+</head>
+<body>
+<div class="page-container">
+    <div class="page-content2">
+        <div class="page-title"><br /></div>
+
+        <div class="page-content-wrap" style="padding: 10px 0px">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="row">
+                        <img style="width: 120px" src="{{asset('img/abclogo.png')}}">
+                    </div>
+                    <div class="row">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <table class="table table-bordered table-striped table-actions">
+                                    <tr>
+                                        <th width="50%">Supject</th>
+                                        <th>{{$data[0]->title}}</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>{{$supplier->name}}</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Contact No</th>
+                                        <th>{{$data[0]->title}}</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Email</th>
+                                        <th>{{$supplier->email}}</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Ref</th>
+                                        <th>{{$data[0]->main_id}}</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Data</th>
+                                        <th>{{$data[0]->title}}</th>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">{{$data[0]->title}}</h3>
+                        </div>
+                        <div class="panel-body">
+                            <br>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table table-bordered table-striped table-actions">
+                                        <thead>
+                                        <tr>
+                                            <th width="110px">Quantity</th>
+                                            <th width="80px">Size</th>
+                                            <th>Description</th>
+                                            <th width="100px">Specs</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($data as $k => $val)
+                                            <tr>
+                                                <input type="hidden" value="{{$val->main_id}}" name="material_inquiry[]">
+                                                <input type="hidden" value="{{$val->boq_id}}" name="boq[]">
+                                                <input type="hidden" value="{{$val->id}}" name="id[]">
+                                                <td>{{$val->quantity.' '.$val->quantity_unit}}</td>
+                                                <td>{{$val->size.' '.$val->size_unit}}</td>
+                                                <td>{{$val->description}}</td>
+                                                <td>
+                                                    @if(file_exists('attachments/material_specs/'.$val->id))
+                                                        @php($files = File::allFiles('attachments/material_specs/'.$val->id))
+                                                        @foreach($files as $file=>$f)
+                                                            <a href="{{asset($f->getPathname())}}">View Specs</a><br>
+                                                        @endforeach
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <div class="col-md-2"></div>
+                                        <div class="col-md-10">
+                                            <div class="errorMasseges" style="padding:10px 0px">
+                                                @foreach ($errors->all() as $error)
+                                                    <li class="alert alert-danger">{{ $error }}</li>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Supplier Form</h3>
+                        </div>
+                        <div class="panel-body">
+                            <h3 class="panel-title">Accept</h3>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="{{ asset('js/plugins.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/actions.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/plugins/bootstrap/bootstrap-datepicker.js') }}"></script>
+
+
+</body>
+</html>

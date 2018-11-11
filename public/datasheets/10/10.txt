@@ -1,0 +1,20 @@
+Panel 
+username : procurement123
+password : Mikdad321dad
+
+
+godaddy : abo.ateleh@gmail.com or miqdad@procurement.com
+password: Mikdad321dad or Mikdad321dad_ 
+
+database: 
+	username : procurement
+	passworf : Mikdad321dad
+
+email : procurement@abc-gcc.com	
+pass  : procurement123!
+
+website abc-gcc
+user name : abcgcc
+email     : miqdad.mohammad@abc-gcc.com	 
+password  : Mikdad321dad!
+

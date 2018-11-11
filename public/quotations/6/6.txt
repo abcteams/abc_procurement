@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="{{ app()->getLocale() }}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>Procurement</title>
+
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" id="theme"  href="{{ asset('css/theme-default.css') }}"/>
+
+    <script type="text/javascript" src="{{ asset('js/plugins/jquery/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/plugins/bootstrap/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/select2.js') }}"></script>
+
+
+</head>
+<body>
+<div class="page-container">
+    <div class="page-content2">
+        <div class="x-navigation x-navigation-horizontal x-navigation-panel" style="background: #ffffff;height: 150px;padding-top: 20px;">
+            <div style="text-align: center">
+               <img style="width: 120px" src="{{asset('img/abclogo.png')}}">
+            </div>
+        </div>
+<div class="page-title"><br />
+    <h2 style="color: #ffffff">Supplier Name : {{$supplier->name}}</h2>
+</div>
+
+<div class="page-content-wrap" style="padding: 10px 50px">
+    <div class="row">
+        <div class="col-md-12">
+                <div class="panel panel-default">
+                    <form class="form-horizontal" method="POST" action="{{ url('supplier/addProposal') }}">
+                        {{ csrf_field() }}
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Proposal</h3>
+                        </div>
+                        <div class="panel-body">
+                            <br>
+                            <br>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="col-md-12">
+
+                                    </div>
+                                    @foreach($data as $k => $val)
+                                        <div class="row">
+                                        <div class="col-md-2">
+                                            <input type="hidden" value="{{$val->main_id}}" name="material_inquiry[]">
+                                            <input type="hidden" value="{{$val->boq_id}}" name="boq[]">
+                                            <input type="hidden" value="{{$val->id}}" name="id[]">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="panel panel-default" style="background: #f8fafc">
+                                                <div class="panel-body">
+                                                    <h3><span class="fa fa-pencil"></span> Profile</h3>
+                                                </div>
+                                                <div class="panel-body form-group-separated">
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 col-xs-5 control-label">Material</label>
+                                                        <div class="col-md-9 col-xs-7">
+                                                            <div class="personalInfo"> {{$val->title}}</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 col-xs-5 control-label">Quantity</label>
+                                                        <div class="col-md-9 col-xs-7">
+                                                            <div class="personalInfo">{{$val->quantity.' '.$val->quantity_unit}}</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 col-xs-5 control-label">Size</label>
+                                                        <div class="col-md-9 col-xs-7">
+                                                            <div class="personalInfo"> {{$val->size.' '.$val->size_unit}}</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 col-xs-5 control-label">Description</label>
+                                                        <div class="col-md-9 col-xs-7">
+                                                            <div class="personalInfo">{{$val->description}} </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 col-xs-5 control-label">Material Specs</label>
+                                                        <div class="col-md-9 col-xs-7">
+                                                            <div class="personalInfo">
+                                                                @if(file_exists('attachments/material_specs/'.$val->id))
+                                                                    @php($files = File::allFiles('attachments/material_specs/'.$val->id))
+                                                                    @foreach($files as $file=>$f)
+                                                                        <a href="{{asset($f->getPathname())}}">View Specs</a><br>
+                                                                    @endforeach
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 col-xs-5 control-label">Your Price (AED)</label>
+                                                        <div class="col-md-9 col-xs-7">
+                                                            <div class="personalInfo">
+                                                                <input type="number" class="form-control" name="price[]" step="0.01" value="0.00" style="width: 100%;background: #ffffff">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 col-xs-5 control-label">Model Number</label>
+                                                        <div class="col-md-9 col-xs-7">
+                                                            <div class="personalInfo">
+                                                                <input type="text" class="form-control" name="model_number[]" style="width: 100%;background: #ffffff">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 col-xs-5 control-label">Brand</label>
+                                                        <div class="col-md-9 col-xs-7">
+                                                            <div class="personalInfo"><input type="text" class="form-control" name="brand[]" style="width: 100%;background: #ffffff"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 col-xs-5 control-label">Your Notes ( Optional )</label>
+                                                        <div class="col-md-9 col-xs-7">
+                                                            <div class="personalInfo"><input type="text" class="form-control" name="description[]" style="width: 100%;background: #ffffff"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-md-12 col-xs-5">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-2"></div>
+                                
+                                @endforeach
+                            </div>
+                        </div>
+                            <div class="row">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <div class="col-md-2"></div>
+                                        <div class="col-md-10">
+                                            <div class="errorMasseges" style="padding:10px 0px">
+                                                @foreach ($errors->all() as $error)
+                                                    <li class="alert alert-danger">{{ $error }}</li>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2"></div>
+                            </div>
+                        <div class="panel-footer">
+                            <input style="margin-left:10px;width:150px;padding: 10px" type="submit" value="{{'Send'}}" class="btn btn-primary pull-right" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- END PAGE CONTENT -->
+</div>
+    </div>
+</div>
+
+<!-- Scripts -->
+<!-- END PLUGINS -->
+
+<script type="text/javascript" src="{{ asset('js/plugins.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/actions.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/plugins/bootstrap/bootstrap-datepicker.js') }}"></script>
+
+
+</body>
+</html>
